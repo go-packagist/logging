@@ -37,7 +37,7 @@ func WithLevel(level logger.Level) monolog.HandlerOpt {
 
 func WithFormatter(formatter monolog.Formatter) monolog.HandlerOpt {
 	return func(h monolog.Handler) {
-		h.(*Handler).formatter = formatter
+		h.(*Handler).SetFormatter(formatter)
 	}
 }
 

@@ -3,6 +3,7 @@ package stream
 import (
 	"github.com/go-packagist/logger"
 	"github.com/go-packagist/monolog"
+	"github.com/go-packagist/monolog/formatter/line"
 	"os"
 	"testing"
 )
@@ -39,6 +40,22 @@ func TestHandler_File(t *testing.T) {
 			NewHandler(
 				file,
 				WithLevel(logger.Error),
+			),
+		),
+	)
+
+	m.Info("test info")
+	m.Debug("test debug")
+	m.Error("test error")
+}
+
+func TestHandler_WithFormatter(t *testing.T) {
+	m := monolog.NewLogger("test",
+		monolog.WithHandler(
+			NewHandler(
+				os.Stdout,
+				WithLevel(logger.Error),
+				WithFormatter(line.NewFormatter()),
 			),
 		),
 	)

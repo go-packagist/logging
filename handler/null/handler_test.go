@@ -12,4 +12,6 @@ func TestHandler(t *testing.T) {
 	))
 
 	m.Info("test info")
+	m.Debug("test debug")
+	m.Error("test error")
 }

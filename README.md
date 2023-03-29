@@ -47,5 +47,5 @@ The MIT License (MIT). Please see [License File](LICENSE) for more information.
 
 ## Thanks
 
-- [Monolog](https://github.com/Seldaek/monolog): I refer to the architecture design of Monolog and make a lot of adjustments to achieve the Go language version
+[Monolog](https://github.com/Seldaek/monolog): I have referenced some architecture designs and made significant adjustments to implement a version in Go programming language.
 
