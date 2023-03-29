@@ -6,9 +6,10 @@ import (
 )
 
 type Record struct {
-	Channel string
-	Message string
-	Level   logger.Level
-	Time    time.Time
-	Extra   interface{}
+	Channel   string
+	Message   string
+	Level     logger.Level
+	Time      time.Time
+	Extra     interface{}
+	Formatted string // todo: remove this field?
 }

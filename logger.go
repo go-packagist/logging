@@ -5,13 +5,6 @@ import (
 	"time"
 )
 
-type Handler interface {
-	IsHandling(*Record) bool
-	Handle(*Record) bool
-}
-
-type Processor interface{}
-
 type Logger struct {
 	channel  string
 	timezone *time.Location

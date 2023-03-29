@@ -19,8 +19,7 @@ func (h *LogHandler) Handle(r *Record) bool {
 }
 
 func (h *LogHandler) IsHandling(record *Record) bool {
-	// TODO implement me
-	panic("implement me")
+	return true
 }
 
 func TestLogger(t *testing.T) {
