@@ -1,6 +1,8 @@
 package formatter
 
-import "github.com/go-packagist/monolog"
+import (
+	"github.com/go-packagist/monolog"
+)
 
 type Formatter interface {
 	Format(record *monolog.Record) string
@@ -27,5 +29,13 @@ func (f *Formatterable) SetFormatter(formatter Formatter) {
 }
 
 func (f *Formatterable) GetFormatter() Formatter {
+	if f.formatter == nil {
+		return f.GetDefaultFormatter()
+	}
+
 	return f.formatter
+}
+
+func (f *Formatterable) GetDefaultFormatter() Formatter {
+	return NewLineFormatter()
 }

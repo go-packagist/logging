@@ -55,7 +55,7 @@ func TestHandler_WithFormatter(t *testing.T) {
 			NewHandler(
 				os.Stdout,
 				WithLevel(logger.Error),
-				WithFormatter(formatter.NewFormatter()),
+				WithFormatter(formatter.NewLineFormatter()),
 			),
 		),
 	)

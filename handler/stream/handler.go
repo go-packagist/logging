@@ -19,7 +19,7 @@ func NewHandler(writer io.Writer, opts ...monolog.HandlerOpt) *Handler {
 	h := &Handler{
 		writer:        writer,
 		level:         logger.Debug,
-		Formatterable: formatter.NewFormatterable(formatter.NewFormatter()),
+		Formatterable: formatter.NewFormatterable(formatter.NewLineFormatter()),
 	}
 
 	for _, opt := range opts {

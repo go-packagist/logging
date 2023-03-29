@@ -9,7 +9,7 @@ import (
 )
 
 func TestFormatter(t *testing.T) {
-	f := NewFormatter()
+	f := NewLineFormatter()
 
 	formatted := f.Format(&monolog.Record{
 		Message: "hello world",
@@ -23,7 +23,7 @@ func TestFormatter(t *testing.T) {
 }
 
 func TestFormatter_WithFormat(t *testing.T) {
-	f := NewFormatter(
+	f := NewLineFormatter(
 		WithFormat("%channel%.%level_name% %datetime% %message% %extra%\n"),
 	)
 
@@ -39,7 +39,7 @@ func TestFormatter_WithFormat(t *testing.T) {
 }
 
 func TestFormatter_WithTimeFormat(t *testing.T) {
-	f := NewFormatter(
+	f := NewLineFormatter(
 		WithTimeFormat(time.RFC3339),
 	)
 

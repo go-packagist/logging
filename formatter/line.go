@@ -18,7 +18,7 @@ type LineFormatter struct {
 
 var _ Formatter = (*LineFormatter)(nil)
 
-func NewFormatter(opts ...Opt) *LineFormatter {
+func NewLineFormatter(opts ...Opt) *LineFormatter {
 	f := &LineFormatter{
 		format:     LineSimpleFormat,
 		timeFormat: LineSimpleTimeFormat,
@@ -32,11 +32,9 @@ func NewFormatter(opts ...Opt) *LineFormatter {
 }
 
 func (f *LineFormatter) Format(record *monolog.Record) string {
-	replaces := f.replaces(record)
-
 	replace := f.format
 
-	for k, v := range replaces {
+	for k, v := range f.replaces(record) {
 		replace = strings.ReplaceAll(replace, k, v)
 	}
 
