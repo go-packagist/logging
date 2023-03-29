@@ -11,5 +11,5 @@ type Record struct {
 	Level     logger.Level
 	Time      time.Time
 	Extra     interface{}
-	Formatted string // todo: remove this field?
+	Formatted string
 }
