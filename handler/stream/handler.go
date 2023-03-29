@@ -3,6 +3,7 @@ package stream
 import (
 	"github.com/go-packagist/logger"
 	"github.com/go-packagist/monolog"
+	"github.com/go-packagist/monolog/formatter/line"
 	"io"
 )
 
@@ -37,7 +38,13 @@ func (h *Handler) IsHandling(record *monolog.Record) bool {
 }
 
 func (h *Handler) Handle(record *monolog.Record) bool {
-	_, err := h.writer.Write([]byte(record.Message))
+	record.Formatted = h.getFormatter().Format(record)
+
+	_, err := h.writer.Write([]byte(record.Formatted))
 
 	return err == nil
+}
+
+func (h *Handler) getFormatter() monolog.Formatter {
+	return line.NewFormatter()
 }

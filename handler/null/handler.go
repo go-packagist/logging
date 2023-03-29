@@ -30,9 +30,9 @@ func WithLevel(level logger.Level) monolog.HandlerOpt {
 }
 
 func (h *Handler) Handle(record *monolog.Record) bool {
-	return record.Level >= h.level
+	return record.Level <= h.level
 }
 
 func (h *Handler) IsHandling(record *monolog.Record) bool {
-	return record.Level >= h.level
+	return record.Level <= h.level
 }
