@@ -1,4 +1,4 @@
-package rotatingfile
+package handler
 
 // Handler todo: implement rotating file handler
 // type Handler struct {

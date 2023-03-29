@@ -1,6 +1,6 @@
 package formatter
 
-func WithFormat(format string) Opt {
+func WithFormat(format string) FormatterOpt {
 	return func(f Formatter) {
 		switch f.(type) {
 		case *LineFormatter:
@@ -11,7 +11,7 @@ func WithFormat(format string) Opt {
 	}
 }
 
-func WithTimeFormat(timeFormat string) Opt {
+func WithTimeFormat(timeFormat string) FormatterOpt {
 	return func(f Formatter) {
 		switch f.(type) {
 		case *LineFormatter:

@@ -1,4 +1,4 @@
-package monolog
+package resource
 
 import (
 	"github.com/go-packagist/logger"

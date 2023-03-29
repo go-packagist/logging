@@ -2,7 +2,7 @@ package formatter
 
 import (
 	"github.com/go-packagist/logger"
-	"github.com/go-packagist/monolog"
+	"github.com/go-packagist/monolog/resource"
 	"github.com/stretchr/testify/assert"
 	"testing"
 	"time"
@@ -11,7 +11,7 @@ import (
 func TestFormatter(t *testing.T) {
 	f := NewLineFormatter()
 
-	formatted := f.Format(&monolog.Record{
+	formatted := f.Format(&resource.Record{
 		Message: "hello world",
 		Level:   logger.Debug,
 		Channel: "test",
@@ -27,7 +27,7 @@ func TestFormatter_WithFormat(t *testing.T) {
 		WithFormat("%channel%.%level_name% %datetime% %message% %extra%\n"),
 	)
 
-	formatted := f.Format(&monolog.Record{
+	formatted := f.Format(&resource.Record{
 		Message: "hello world",
 		Level:   logger.Debug,
 		Channel: "test",
@@ -43,7 +43,7 @@ func TestFormatter_WithTimeFormat(t *testing.T) {
 		WithTimeFormat(time.RFC3339),
 	)
 
-	formatted := f.Format(&monolog.Record{
+	formatted := f.Format(&resource.Record{
 		Message: "hello world",
 		Level:   logger.Debug,
 		Channel: "test",

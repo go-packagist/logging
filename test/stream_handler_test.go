@@ -1,9 +1,10 @@
-package stream
+package test
 
 import (
 	"github.com/go-packagist/logger"
 	"github.com/go-packagist/monolog"
 	"github.com/go-packagist/monolog/formatter"
+	"github.com/go-packagist/monolog/handler"
 	"os"
 	"testing"
 )
@@ -11,9 +12,9 @@ import (
 func TestHandler_Stdout(t *testing.T) {
 	m := monolog.NewLogger("test",
 		monolog.WithHandler(
-			NewHandler(
+			handler.NewStreamHandler(
 				os.Stdout,
-				WithLevel(logger.Error),
+				handler.WithLevel(logger.Error),
 			),
 		),
 	)
@@ -24,7 +25,7 @@ func TestHandler_Stdout(t *testing.T) {
 }
 
 func TestHandler_File(t *testing.T) {
-	file, err := os.OpenFile("./../../.testdata/test-stream-file-handler.log", os.O_CREATE|os.O_APPEND|os.O_WRONLY, 0644)
+	file, err := os.OpenFile("./../.testdata/test-stream-file-handler.log", os.O_CREATE|os.O_APPEND|os.O_WRONLY, 0644)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -37,9 +38,9 @@ func TestHandler_File(t *testing.T) {
 
 	m := monolog.NewLogger("test",
 		monolog.WithHandler(
-			NewHandler(
+			handler.NewStreamHandler(
 				file,
-				WithLevel(logger.Error),
+				handler.WithLevel(logger.Error),
 			),
 		),
 	)
@@ -52,10 +53,10 @@ func TestHandler_File(t *testing.T) {
 func TestHandler_WithFormatter(t *testing.T) {
 	m := monolog.NewLogger("test",
 		monolog.WithHandler(
-			NewHandler(
+			handler.NewStreamHandler(
 				os.Stdout,
-				WithLevel(logger.Error),
-				WithFormatter(formatter.NewLineFormatter()),
+				handler.WithLevel(logger.Error),
+				handler.WithFormatter(formatter.NewLineFormatter()),
 			),
 		),
 	)

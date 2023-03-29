@@ -1,13 +1,14 @@
-package noop
+package test
 
 import (
 	"github.com/go-packagist/monolog"
+	"github.com/go-packagist/monolog/handler"
 	"testing"
 )
 
-func TestHandler(t *testing.T) {
+func TestNoopHandler(t *testing.T) {
 	m := monolog.NewLogger("test", monolog.WithHandler(
-		NewHandler(),
+		handler.NewNoopHandler(),
 	))
 
 	m.Info("test info")

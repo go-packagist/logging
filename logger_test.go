@@ -1,6 +1,8 @@
 package monolog
 
 import (
+	"github.com/go-packagist/monolog/handler"
+	"github.com/go-packagist/monolog/resource"
 	"testing"
 	"time"
 )
@@ -8,13 +10,13 @@ import (
 type testHandler struct {
 }
 
-var _ Handler = (*testHandler)(nil)
+var _ handler.Handler = (*testHandler)(nil)
 
-func (h *testHandler) IsHandling(record *Record) bool {
+func (h *testHandler) IsHandling(record *resource.Record) bool {
 	return true
 }
 
-func (h *testHandler) Handle(record *Record) bool {
+func (h *testHandler) Handle(record *resource.Record) bool {
 	println(record.Message)
 	return true
 }

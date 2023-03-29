@@ -1,14 +1,14 @@
 package formatter
 
 import (
-	"github.com/go-packagist/monolog"
+	"github.com/go-packagist/monolog/resource"
 )
 
 type Formatter interface {
-	Format(record *monolog.Record) string
+	Format(record *resource.Record) string
 }
 
-type Opt func(Formatter)
+type FormatterOpt func(Formatter)
 
 type Formatterable struct {
 	formatter Formatter
@@ -20,7 +20,7 @@ func NewFormatterable(formatter Formatter) *Formatterable {
 	}
 }
 
-func (f *Formatterable) Format(record *monolog.Record) string {
+func (f *Formatterable) Format(record *resource.Record) string {
 	return f.formatter.Format(record)
 }
 

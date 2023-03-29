@@ -2,7 +2,7 @@ package formatter
 
 import (
 	"fmt"
-	"github.com/go-packagist/monolog"
+	"github.com/go-packagist/monolog/resource"
 	"strings"
 )
 
@@ -18,7 +18,7 @@ type LineFormatter struct {
 
 var _ Formatter = (*LineFormatter)(nil)
 
-func NewLineFormatter(opts ...Opt) *LineFormatter {
+func NewLineFormatter(opts ...FormatterOpt) *LineFormatter {
 	f := &LineFormatter{
 		format:     LineSimpleFormat,
 		timeFormat: LineSimpleTimeFormat,
@@ -31,7 +31,7 @@ func NewLineFormatter(opts ...Opt) *LineFormatter {
 	return f
 }
 
-func (f *LineFormatter) Format(record *monolog.Record) string {
+func (f *LineFormatter) Format(record *resource.Record) string {
 	replace := f.format
 
 	for k, v := range f.replaces(record) {
@@ -41,7 +41,7 @@ func (f *LineFormatter) Format(record *monolog.Record) string {
 	return replace
 }
 
-func (f *LineFormatter) replaces(record *monolog.Record) map[string]string {
+func (f *LineFormatter) replaces(record *resource.Record) map[string]string {
 	extra := ""
 
 	if record.Extra != nil {
