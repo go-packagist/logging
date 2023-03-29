@@ -3,7 +3,7 @@ package stream
 import (
 	"github.com/go-packagist/logger"
 	"github.com/go-packagist/monolog"
-	"github.com/go-packagist/monolog/formatter/line"
+	"github.com/go-packagist/monolog/formatter"
 	"os"
 	"testing"
 )
@@ -55,7 +55,7 @@ func TestHandler_WithFormatter(t *testing.T) {
 			NewHandler(
 				os.Stdout,
 				WithLevel(logger.Error),
-				WithFormatter(line.NewFormatter()),
+				WithFormatter(formatter.NewFormatter()),
 			),
 		),
 	)

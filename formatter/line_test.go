@@ -1,4 +1,4 @@
-package line
+package formatter
 
 import (
 	"github.com/go-packagist/logger"

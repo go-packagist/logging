@@ -1,10 +1,12 @@
-package monolog
+package formatter
+
+import "github.com/go-packagist/monolog"
 
 type Formatter interface {
-	Format(record *Record) string
+	Format(record *monolog.Record) string
 }
 
-type FormatterOpt func(Formatter)
+type Opt func(Formatter)
 
 type Formatterable struct {
 	formatter Formatter
@@ -16,7 +18,7 @@ func NewFormatterable(formatter Formatter) *Formatterable {
 	}
 }
 
-func (f *Formatterable) Format(record *Record) string {
+func (f *Formatterable) Format(record *monolog.Record) string {
 	return f.formatter.Format(record)
 }
 

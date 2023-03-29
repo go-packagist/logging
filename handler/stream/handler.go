@@ -3,14 +3,14 @@ package stream
 import (
 	"github.com/go-packagist/logger"
 	"github.com/go-packagist/monolog"
-	"github.com/go-packagist/monolog/formatter/line"
+	"github.com/go-packagist/monolog/formatter"
 	"io"
 )
 
 type Handler struct {
 	writer io.Writer
 	level  logger.Level
-	*monolog.Formatterable
+	*formatter.Formatterable
 }
 
 var _ monolog.Handler = (*Handler)(nil)
@@ -19,7 +19,7 @@ func NewHandler(writer io.Writer, opts ...monolog.HandlerOpt) *Handler {
 	h := &Handler{
 		writer:        writer,
 		level:         logger.Debug,
-		Formatterable: monolog.NewFormatterable(line.NewFormatter()),
+		Formatterable: formatter.NewFormatterable(formatter.NewFormatter()),
 	}
 
 	for _, opt := range opts {
@@ -35,7 +35,7 @@ func WithLevel(level logger.Level) monolog.HandlerOpt {
 	}
 }
 
-func WithFormatter(formatter monolog.Formatter) monolog.HandlerOpt {
+func WithFormatter(formatter formatter.Formatter) monolog.HandlerOpt {
 	return func(h monolog.Handler) {
 		h.(*Handler).SetFormatter(formatter)
 	}
