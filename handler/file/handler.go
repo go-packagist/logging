@@ -9,6 +9,7 @@ import (
 
 type Handler struct {
 	filename string
+	file     *os.File
 	*stream.Handler
 }
 
@@ -45,13 +46,11 @@ func (h *Handler) init() {
 	if err != nil {
 		panic(err)
 	}
-	// TODO: defer close file?
-	// defer func(file *os.File) {
-	// 	err := file.Close()
-	// 	if err != nil {
-	// 		log.Fatal(err)
-	// 	}
-	// }(file)
 
+	h.file = file
 	h.Handler = stream.NewHandler(file)
+}
+
+func (h *Handler) Close() {
+	_ = h.file.Close()
 }

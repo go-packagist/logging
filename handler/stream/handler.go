@@ -10,7 +10,9 @@ import (
 type Handler struct {
 	writer io.Writer
 	level  logger.Level
+
 	*monolog.Formatterable
+	*monolog.UnimplementedHandler
 }
 
 var _ monolog.Handler = (*Handler)(nil)

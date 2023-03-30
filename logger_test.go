@@ -6,6 +6,7 @@ import (
 )
 
 type testHandler struct {
+	*UnimplementedHandler
 }
 
 var _ Handler = (*testHandler)(nil)
