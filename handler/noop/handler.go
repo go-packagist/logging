@@ -5,6 +5,7 @@ import (
 )
 
 type Handler struct {
+	*monolog.UnimplementedHandler
 }
 
 var _ monolog.Handler = (*Handler)(nil)

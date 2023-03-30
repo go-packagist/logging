@@ -7,6 +7,7 @@ import (
 
 type Handler struct {
 	level logger.Level
+	*monolog.UnimplementedHandler
 }
 
 var _ monolog.Handler = (*Handler)(nil)

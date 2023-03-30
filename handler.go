@@ -4,6 +4,7 @@ package monolog
 type Handler interface {
 	IsHandling(*Record) bool
 	Handle(*Record) bool
+	Close()
 }
 
 // HandlerOpt is a function that can be used to configure a Handler.
@@ -27,3 +28,17 @@ func (h Handleable) HandleBatch(records []*Record) bool {
 
 	return true
 }
+
+// UnimplementedHandler is a Handler that does nothing.
+type UnimplementedHandler struct {
+}
+
+func (h *UnimplementedHandler) IsHandling(*Record) bool {
+	return false
+}
+
+func (h *UnimplementedHandler) Handle(*Record) bool {
+	return false
+}
+
+func (h *UnimplementedHandler) Close() {}

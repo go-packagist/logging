@@ -6,10 +6,10 @@ import (
 )
 
 type Record struct {
-	Channel   string
-	Message   string
-	Level     logger.Level
-	Time      time.Time
-	Extra     interface{}
-	Formatted string
+	Channel   string       `json:"channel"`
+	Message   string       `json:"message"`
+	Level     logger.Level `json:"level"`
+	Time      time.Time    `json:"time"`
+	Extra     interface{}  `json:"extra"`
+	Formatted string       `json:"formatted"`
 }
