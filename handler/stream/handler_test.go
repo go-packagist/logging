@@ -8,8 +8,8 @@ import (
 	"testing"
 )
 
-func TestHandler_Stdout(t *testing.T) {
-	m := monolog.NewLogger("test",
+func createStdoutLogger() *monolog.Logger {
+	return monolog.NewLogger("test",
 		monolog.WithHandler(
 			NewHandler(
 				os.Stdout,
@@ -17,6 +17,10 @@ func TestHandler_Stdout(t *testing.T) {
 			),
 		),
 	)
+}
+
+func TestHandler_Stdout(t *testing.T) {
+	m := createStdoutLogger()
 
 	m.Emergency("test emergency")
 	m.Alert("test alert")
@@ -26,6 +30,24 @@ func TestHandler_Stdout(t *testing.T) {
 	m.Notice("test notice")
 	m.Info("test info")
 	m.Debug("test debug")
+}
+
+func BenchmarkHandler_Stdout(b *testing.B) {
+	m := createStdoutLogger()
+	defer m.Close()
+
+	b.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			m.Emergency("test emergency")
+			// m.Alert("test alert")
+			// m.Critical("test critical")
+			// m.Error("test error")
+			// m.Warning("test warning")
+			// m.Notice("test notice")
+			// m.Info("test info")
+			// m.Debug("test debug")
+		}
+	})
 }
 
 func TestHandler_File(t *testing.T) {

@@ -57,7 +57,7 @@ func (f *Formatter) replaces(record *monolog.Record) map[string]string {
 	extra := ""
 
 	if record.Extra != nil {
-		extra = fmt.Sprintf("%v", record.Extra)
+		extra = fmt.Sprintf("%+v", record.Extra)
 	}
 
 	return map[string]string{
