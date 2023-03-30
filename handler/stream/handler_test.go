@@ -18,13 +18,18 @@ func TestHandler_Stdout(t *testing.T) {
 		),
 	)
 
+	m.Emergency("test emergency")
+	m.Alert("test alert")
+	m.Critical("test critical")
+	m.Error("test error")
+	m.Warning("test warning")
+	m.Notice("test notice")
 	m.Info("test info")
 	m.Debug("test debug")
-	m.Error("test error")
 }
 
 func TestHandler_File(t *testing.T) {
-	file, err := os.OpenFile("./../../.testdata/test-stream-file-handler.log", os.O_CREATE|os.O_APPEND|os.O_WRONLY, 0644)
+	file, err := os.OpenFile("./../../.testdata/test-stream-handler-file.log", os.O_CREATE|os.O_APPEND|os.O_WRONLY, 0644)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -39,14 +44,19 @@ func TestHandler_File(t *testing.T) {
 		monolog.WithHandler(
 			NewHandler(
 				file,
-				WithLevel(logger.Error),
+				WithLevel(logger.Info),
 			),
 		),
 	)
 
+	m.Emergency("test emergency")
+	m.Alert("test alert")
+	m.Critical("test critical")
+	m.Error("test error")
+	m.Warning("test warning")
+	m.Notice("test notice")
 	m.Info("test info")
 	m.Debug("test debug")
-	m.Error("test error")
 }
 
 func TestHandler_WithFormatter(t *testing.T) {

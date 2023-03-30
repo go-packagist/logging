@@ -10,6 +10,7 @@ import (
 type Handler struct {
 	filename string
 	file     *os.File
+
 	*stream.Handler
 }
 
