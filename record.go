@@ -10,7 +10,7 @@ type Record struct {
 	Channel   string       `json:"channel"`
 	Message   string       `json:"message"`
 	Level     logger.Level `json:"level"`
-	Time      time.Time    `json:"time" time:"2006-01-02"`
+	Time      time.Time    `json:"time"`
 	Extra     interface{}  `json:"extra,omitempty"`
 	Formatted string       `json:"formatted"`
 }
