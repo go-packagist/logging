@@ -3,7 +3,7 @@ module github.com/go-packagist/monolog
 go 1.20
 
 require (
-	github.com/go-packagist/logger v1.0.0
+	github.com/go-packagist/logger v1.1.0
 	github.com/stretchr/testify v1.8.2
 )
 

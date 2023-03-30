@@ -9,10 +9,9 @@ import (
 
 type Handler struct {
 	writer io.Writer
-	level  logger.Level
 
+	*monolog.Handlerable
 	*monolog.Formatterable
-	*monolog.UnimplementedHandler
 }
 
 var _ monolog.Handler = (*Handler)(nil)
@@ -20,8 +19,8 @@ var _ monolog.Handler = (*Handler)(nil)
 func NewHandler(writer io.Writer, opts ...monolog.HandlerOpt) *Handler {
 	h := &Handler{
 		writer:        writer,
-		level:         logger.Debug,
 		Formatterable: monolog.NewFormatterable(line.NewFormatter()),
+		Handlerable:   &monolog.Handlerable{},
 	}
 
 	for _, opt := range opts {
@@ -41,16 +40,6 @@ func WithFormatter(formatter monolog.Formatter) monolog.HandlerOpt {
 	return func(h monolog.Handler) {
 		h.(*Handler).SetFormatter(formatter)
 	}
-}
-
-func (h *Handler) SetLevel(level logger.Level) *Handler {
-	h.level = level
-
-	return h
-}
-
-func (h *Handler) IsHandling(record *monolog.Record) bool {
-	return record.Level <= h.level
 }
 
 func (h *Handler) Handle(record *monolog.Record) bool {

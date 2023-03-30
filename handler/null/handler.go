@@ -6,15 +6,14 @@ import (
 )
 
 type Handler struct {
-	level logger.Level
-	*monolog.UnimplementedHandler
+	*monolog.Handlerable
 }
 
 var _ monolog.Handler = (*Handler)(nil)
 
 func NewHandler(opts ...monolog.HandlerOpt) *Handler {
 	n := &Handler{
-		level: logger.Debug,
+		Handlerable: &monolog.Handlerable{},
 	}
 
 	for _, opt := range opts {
@@ -26,14 +25,10 @@ func NewHandler(opts ...monolog.HandlerOpt) *Handler {
 
 func WithLevel(level logger.Level) monolog.HandlerOpt {
 	return func(h monolog.Handler) {
-		h.(*Handler).level = level
+		h.(*Handler).SetLevel(level)
 	}
 }
 
-func (h *Handler) IsHandling(record *monolog.Record) bool {
-	return record.Level <= h.level
-}
-
 func (h *Handler) Handle(record *monolog.Record) bool {
-	return record.Level <= h.level
+	return record.Level <= h.GetLevel()
 }
