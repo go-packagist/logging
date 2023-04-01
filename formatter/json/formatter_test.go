@@ -11,7 +11,8 @@ import (
 func TestFormatter(t *testing.T) {
 	f := NewFormatter()
 
-	assert.Equal(t, `{"channel":"test","message":"hello world","level":"debug","time":"2020-01-01T00:00:00Z","extra":{"bar":"baz","baz":1,"foo":"bar"}}\n`, f.Format(&monolog.Record{
+	assert.Equal(t, `{"channel":"test","message":"hello world","level":"debug","time":"2020-01-01T00:00:00Z","extra":{"bar":"baz","baz":1,"foo":"bar"}}
+`, f.Format(&monolog.Record{
 		Message: "hello world",
 		Level:   logger.Debug,
 		Channel: "test",
@@ -23,7 +24,8 @@ func TestFormatter(t *testing.T) {
 		},
 	}))
 
-	assert.Equal(t, `{"channel":"test","message":"hello world","level":"debug","time":"2020-01-01T00:00:00Z","extra":{"Foo":"bar","bar":"baz","Baz":1}}\n`, f.Format(&monolog.Record{
+	assert.Equal(t, `{"channel":"test","message":"hello world","level":"debug","time":"2020-01-01T00:00:00Z","extra":{"Foo":"bar","bar":"baz","Baz":1}}
+`, f.Format(&monolog.Record{
 		Message: "hello world",
 		Level:   logger.Debug,
 		Channel: "test",
