@@ -29,6 +29,7 @@ func TestLogger(t *testing.T) {
 		WithHandler(&testHandler{}),
 		WithHandlers(&testHandler{}, &testHandler{}),
 	)
+	defer l.Close()
 
 	l.Info("info")
 	l.Debugf("debug %s", "debug")

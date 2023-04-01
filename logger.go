@@ -33,7 +33,7 @@ func NewLogger(channel string, opts ...Opt) *Logger {
 
 func (l *Logger) init() {
 	if nil == l.timezone {
-		l.timezone = time.Local
+		WithTimezone(time.Local)(l)
 	}
 
 	l.setLoggerable()
