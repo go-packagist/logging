@@ -34,7 +34,6 @@ func TestHandler_Stdout(t *testing.T) {
 
 func BenchmarkHandler_Stdout(b *testing.B) {
 	m := createStdoutLogger()
-	defer m.Close()
 
 	b.RunParallel(func(pb *testing.PB) {
 		for pb.Next() {
@@ -55,12 +54,7 @@ func TestHandler_File(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	defer func(file *os.File) {
-		err := file.Close()
-		if err != nil {
-			t.Fatal(err)
-		}
-	}(file)
+	defer file.Close()
 
 	m := monolog.NewLogger("test",
 		monolog.WithHandler(

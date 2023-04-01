@@ -15,7 +15,6 @@ func main() {
 			),
 		),
 	)
-	defer m.Close()
 
 	m.Emergency("test emergency")
 	m.Alert("test alert")

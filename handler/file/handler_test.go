@@ -3,6 +3,7 @@ package file
 import (
 	"github.com/go-packagist/logger"
 	"github.com/go-packagist/monolog"
+	"github.com/go-packagist/monolog/formatter/json"
 	"testing"
 )
 
@@ -12,10 +13,10 @@ func TestHandler(t *testing.T) {
 			NewHandler(
 				"./../../.testdata/test-file-handler.log",
 				WithLevel(logger.Debug),
+				WithFormatter(json.NewFormatter()),
 			),
 		),
 	)
-	defer m.Close()
 
 	m.Emergency("test emergency")
 	m.Alert("test alert")
@@ -25,7 +26,6 @@ func TestHandler(t *testing.T) {
 	m.Notice("test notice")
 	m.Info("test info")
 	m.Debug("test debug")
-
 }
 
 func BenchmarkHander(b *testing.B) {
@@ -37,7 +37,6 @@ func BenchmarkHander(b *testing.B) {
 			),
 		),
 	)
-	defer m.Close()
 
 	b.RunParallel(func(pb *testing.PB) {
 		for pb.Next() {

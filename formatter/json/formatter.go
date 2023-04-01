@@ -39,5 +39,5 @@ func (f *Formatter) Format(record *monolog.Record) string {
 		return ""
 	}
 
-	return string(jsoned) + `\n`
+	return string(jsoned) + "\n"
 }
