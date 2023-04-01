@@ -3,7 +3,7 @@ package file
 import (
 	"github.com/go-packagist/logger"
 	"github.com/go-packagist/monolog"
-	"github.com/go-packagist/monolog/handler/stream"
+	"github.com/go-packagist/monolog/formatter/line"
 	"os"
 )
 
@@ -11,17 +11,18 @@ type Handler struct {
 	filename string
 	file     *os.File
 
-	*stream.Handler
+	*monolog.Handlerable
+	*monolog.Formatterable
 }
 
 var _ monolog.Handler = (*Handler)(nil)
 
 func NewHandler(filename string, opts ...monolog.HandlerOpt) *Handler {
 	h := &Handler{
-		filename: filename,
+		filename:      filename,
+		Handlerable:   &monolog.Handlerable{},
+		Formatterable: monolog.NewFormatterable(line.NewFormatter()),
 	}
-
-	h.init()
 
 	for _, opt := range opts {
 		opt(h)
@@ -42,16 +43,18 @@ func WithFormatter(formatter monolog.Formatter) monolog.HandlerOpt {
 	}
 }
 
-func (h *Handler) init() {
+func (h *Handler) Handle(record *monolog.Record) bool {
 	file, err := os.OpenFile(h.filename, os.O_CREATE|os.O_APPEND|os.O_WRONLY, 0666)
 	if err != nil {
-		panic(err)
+		return false
+	}
+	defer file.Close()
+
+	formatted := h.GetFormatter().Format(record)
+
+	if _, err := file.Write([]byte(formatted)); err != nil {
+		return false
 	}
 
-	h.file = file
-	h.Handler = stream.NewHandler(file)
-}
-
-func (h *Handler) Close() {
-	_ = h.file.Close()
+	return true
 }

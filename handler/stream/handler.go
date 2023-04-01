@@ -43,9 +43,16 @@ func WithFormatter(formatter monolog.Formatter) monolog.HandlerOpt {
 }
 
 func (h *Handler) Handle(record *monolog.Record) bool {
-	record.Formatted = h.GetFormatter().Format(record)
-
-	_, err := h.writer.Write([]byte(record.Formatted))
+	_, err := h.writer.Write([]byte(
+		h.GetFormatter().Format(record)))
 
 	return err == nil
+}
+
+func (h *Handler) Close() error {
+	if closer, ok := h.writer.(io.Closer); ok {
+		return closer.Close()
+	}
+
+	return nil
 }

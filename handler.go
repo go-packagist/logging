@@ -6,7 +6,7 @@ import "github.com/go-packagist/logger"
 type Handler interface {
 	IsHandling(*Record) bool
 	Handle(*Record) bool
-	Close()
+	Close() error
 }
 
 // HandlerOpt is a function that can be used to configure a Handler.
@@ -42,7 +42,9 @@ func (h *Handlerable) Handle(*Record) bool {
 	return false
 }
 
-func (h *Handlerable) Close() {}
+func (h *Handlerable) Close() error {
+	return nil
+}
 
 // Handleable is a function that can be used as a Handler.
 type Handleable func(record *Record) bool
