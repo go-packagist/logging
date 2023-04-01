@@ -22,9 +22,10 @@ var _ monolog.Handler = (*Handler)(nil)
 func NewHandler(filename string, opts ...monolog.HandlerOpt) *Handler {
 	h := &Handler{
 		filename: filename,
-		Handlerable: &monolog.Handlerable{
-			Formatter: line.NewFormatter(),
-		},
+		Handlerable: monolog.NewHandlerable(
+			monolog.WithLevel(logger.Debug),
+			monolog.WithFormatter(line.NewFormatter()),
+		),
 	}
 
 	for _, opt := range opts {

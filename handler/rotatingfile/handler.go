@@ -4,12 +4,12 @@ package rotatingfile
 // type Handler struct {
 // 	filename string
 // 	maxFiles int
-// 	level    logger.Level
+// 	level    logger.level
 // }
 //
 // var _ monolog.Handler = (*Handler)(nil)
 //
-// func NewHandler(filename string, maxFiles int, level logger.Level) *Handler {
+// func NewHandler(filename string, maxFiles int, level logger.level) *Handler {
 // 	return &Handler{
 // 		filename: filename,
 // 		maxFiles: maxFiles,
@@ -18,9 +18,9 @@ package rotatingfile
 // }
 //
 // func (h *Handler) IsHandling(record *monolog.Record) bool {
-// 	return record.Level >= h.level
+// 	return record.level >= h.level
 // }
 //
 // func (h *Handler) Handle(record *monolog.Record) bool {
-// 	return record.Level >= h.level
+// 	return record.level >= h.level
 // }

@@ -18,10 +18,10 @@ var _ monolog.Handler = (*Handler)(nil)
 func NewHandler(writer io.Writer, opts ...monolog.HandlerOpt) *Handler {
 	h := &Handler{
 		writer: writer,
-		Handlerable: &monolog.Handlerable{
-			Level:     logger.Debug,
-			Formatter: line.NewFormatter(),
-		},
+		Handlerable: monolog.NewHandlerable(
+			monolog.WithLevel(logger.Debug),
+			monolog.WithFormatter(line.NewFormatter()),
+		),
 	}
 
 	for _, opt := range opts {

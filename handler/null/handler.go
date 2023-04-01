@@ -13,7 +13,9 @@ var _ monolog.Handler = (*Handler)(nil)
 
 func NewHandler(opts ...monolog.HandlerOpt) *Handler {
 	n := &Handler{
-		Handlerable: &monolog.Handlerable{},
+		Handlerable: monolog.NewHandlerable(
+			monolog.WithLevel(logger.Debug),
+		),
 	}
 
 	for _, opt := range opts {
