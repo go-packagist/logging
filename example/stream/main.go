@@ -22,4 +22,5 @@ func main() {
 	m.Emergency("test emergency")
 	m.Info("test info")
 	m.Error("test error")
+	m.Debug("test debug")
 }
