@@ -39,13 +39,13 @@ func BenchmarkHandler_Stdout(b *testing.B) {
 	b.RunParallel(func(pb *testing.PB) {
 		for pb.Next() {
 			m.Emergency("test emergency")
-			// m.Alert("test alert")
-			// m.Critical("test critical")
-			// m.Error("test error")
-			// m.Warning("test warning")
-			// m.Notice("test notice")
-			// m.Info("test info")
-			// m.Debug("test debug")
+			m.Alert("test alert")
+			m.Critical("test critical")
+			m.Error("test error")
+			m.Warning("test warning")
+			m.Notice("test notice")
+			m.Info("test info")
+			m.Debug("test debug")
 		}
 	})
 }
