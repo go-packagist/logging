@@ -87,6 +87,7 @@ func TestHandler_WithFormatter(t *testing.T) {
 			),
 		),
 	)
+	defer m.Close()
 
 	m.Info("test info")
 	m.Debug("test debug")
