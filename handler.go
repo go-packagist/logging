@@ -1,6 +1,8 @@
 package monolog
 
-import "github.com/go-packagist/logger"
+import (
+	"github.com/go-packagist/logger"
+)
 
 // Handler is the interface that all handlers must implement.
 type Handler interface {
@@ -14,7 +16,8 @@ type HandlerOpt func(Handler)
 
 // Handlerable is a struct that can be embedded in a Handler to provide
 type Handlerable struct {
-	Level logger.Level
+	Level     logger.Level
+	Formatter Formatter
 }
 
 func (h *Handlerable) SetLevel(level logger.Level) {
@@ -32,6 +35,14 @@ func (h *Handlerable) GetLevel() logger.Level {
 
 func (h *Handlerable) GetDefaultLevel() logger.Level {
 	return logger.Debug
+}
+
+func (h *Handlerable) SetFormatter(formatter Formatter) {
+	h.Formatter = formatter
+}
+
+func (h *Handlerable) GetFormatter() Formatter {
+	return h.Formatter
 }
 
 func (h *Handlerable) IsHandling(record *Record) bool {

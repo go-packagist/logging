@@ -11,16 +11,17 @@ type Handler struct {
 	writer io.Writer
 
 	*monolog.Handlerable
-	*monolog.Formatterable
 }
 
 var _ monolog.Handler = (*Handler)(nil)
 
 func NewHandler(writer io.Writer, opts ...monolog.HandlerOpt) *Handler {
 	h := &Handler{
-		writer:        writer,
-		Formatterable: monolog.NewFormatterable(line.NewFormatter()),
-		Handlerable:   &monolog.Handlerable{},
+		writer: writer,
+		Handlerable: &monolog.Handlerable{
+			Level:     logger.Debug,
+			Formatter: line.NewFormatter(),
+		},
 	}
 
 	for _, opt := range opts {

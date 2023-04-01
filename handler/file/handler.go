@@ -15,16 +15,16 @@ type Handler struct {
 	file     *os.File
 
 	*monolog.Handlerable
-	*monolog.Formatterable
 }
 
 var _ monolog.Handler = (*Handler)(nil)
 
 func NewHandler(filename string, opts ...monolog.HandlerOpt) *Handler {
 	h := &Handler{
-		filename:      filename,
-		Handlerable:   &monolog.Handlerable{},
-		Formatterable: monolog.NewFormatterable(line.NewFormatter()),
+		filename: filename,
+		Handlerable: &monolog.Handlerable{
+			Formatter: line.NewFormatter(),
+		},
 	}
 
 	for _, opt := range opts {
