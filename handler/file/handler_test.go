@@ -3,7 +3,7 @@ package file
 import (
 	"github.com/go-packagist/logger"
 	"github.com/go-packagist/monolog"
-	"github.com/go-packagist/monolog/formatter/json"
+	"github.com/go-packagist/monolog/formatter/line"
 	"testing"
 )
 
@@ -13,7 +13,7 @@ func TestHandler(t *testing.T) {
 			NewHandler(
 				"./../../.testdata/test-file-handler.log",
 				WithLevel(logger.Debug),
-				WithFormatter(json.NewFormatter()),
+				WithFormatter(line.NewFormatter()),
 			),
 		),
 	)
