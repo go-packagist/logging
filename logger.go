@@ -97,23 +97,13 @@ func (l *Logger) setLoggerable() {
 		}
 
 		for _, handler := range l.Handlers() {
-			func() {
-				// defer handler.Close()
+			if !handler.IsHandling(record) {
+				continue // skip
+			}
 
-				if !handler.IsHandling(record) {
-					return // skip
-				}
-
-				if true == handler.Handle(record) {
-					return // handled
-				}
-			}()
+			if true == handler.Handle(record) {
+				break // handled
+			}
 		}
-	}
-}
-
-func (l *Logger) Close() {
-	for _, handler := range l.Handlers() {
-		handler.Close()
 	}
 }

@@ -17,7 +17,6 @@ func TestHandler(t *testing.T) {
 			),
 		),
 	)
-	defer m.Close()
 
 	m.Emergency("test emergency")
 	m.Alert("test alert")
@@ -38,7 +37,6 @@ func BenchmarkHander(b *testing.B) {
 			),
 		),
 	)
-	defer m.Close()
 
 	b.RunParallel(func(pb *testing.PB) {
 		for pb.Next() {

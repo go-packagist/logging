@@ -49,7 +49,6 @@ func TestLogger(t *testing.T) {
 			),
 		}),
 	)
-	defer l.Close()
 
 	l.Info("info")
 	l.Debugf("debug %s", "debug")
