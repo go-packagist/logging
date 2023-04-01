@@ -57,7 +57,7 @@ func main() {
 }
 ```
 
-**Use registry:**
+**Registry usage:**
 
 ```go
 package registry
