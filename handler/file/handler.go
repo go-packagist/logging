@@ -7,6 +7,9 @@ import (
 	"os"
 )
 
+// Handler is a file handler.
+// Because of the frequent opening and closing of file handles, the performance is not good. stream handler is recommended.
+// PS: Although its performance is not good, its concurrency in seconds is enough for most uses, on my machine it was about 117832, and the request time per log was 8775 ns.
 type Handler struct {
 	filename string
 	file     *os.File
