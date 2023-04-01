@@ -12,7 +12,6 @@ type Record struct {
 	Level   logger.Level `json:"level"`
 	Time    time.Time    `json:"time"`
 	Extra   interface{}  `json:"extra,omitempty"`
-	// Formatted string       `json:"formatted"`
 }
 
 func (r *Record) Marshal() ([]byte, error) {
