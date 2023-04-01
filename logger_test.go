@@ -1,6 +1,7 @@
 package monolog
 
 import (
+	"github.com/go-packagist/logger"
 	"testing"
 	"time"
 )
@@ -11,13 +12,23 @@ type testHandler struct {
 
 var _ Handler = (*testHandler)(nil)
 
-func (h *testHandler) IsHandling(record *Record) bool {
+func (h *testHandler) Handle(record *Record) bool {
+	if formatter, ok := h.GetFormatter().(Formatter); !ok {
+		println(record.Message)
+	} else {
+		println(formatter.Format(record))
+	}
+
 	return true
 }
 
-func (h *testHandler) Handle(record *Record) bool {
-	println(record.Message)
-	return true
+type testFormatter struct {
+}
+
+var _ Formatter = (*testFormatter)(nil)
+
+func (f *testFormatter) Format(record *Record) string {
+	return "Formatted: " + record.Message
 }
 
 func TestLogger(t *testing.T) {
@@ -26,8 +37,17 @@ func TestLogger(t *testing.T) {
 	l := NewLogger("test",
 		WithChannel("test1"),
 		WithTimezone(loc),
-		WithHandler(&testHandler{}),
-		WithHandlers(&testHandler{}, &testHandler{}),
+		WithHandler(&testHandler{
+			Handlerable: NewHandlerable(),
+		}),
+		WithHandlers(&testHandler{
+			Handlerable: NewHandlerable(),
+		}, &testHandler{
+			Handlerable: NewHandlerable(
+				WithLevel(logger.Error),
+				WithFormatter(&testFormatter{}),
+			),
+		}),
 	)
 	defer l.Close()
 
