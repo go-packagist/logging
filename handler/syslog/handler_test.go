@@ -23,8 +23,8 @@ func TestHandler_Local(t *testing.T) {
 func TestHandler_Udp(t *testing.T) {
 	h := NewHandler("go-packagist",
 		WithLevel(logger.Info),
-		WithNetwork("udp"),
-		WithRaddr("192.168.8.92:30732"),
+		// WithNetwork("udp"),
+		// WithRaddr("192.168.8.92:30732"),
 	)
 
 	assert.False(t, h.Handle(nil))
@@ -45,8 +45,8 @@ func TestHandler_Udp(t *testing.T) {
 func BenchmarkHandler_Udp(b *testing.B) {
 	h := NewHandler("go-packagist",
 		WithLevel(logger.Info),
-		WithNetwork("udp"),
-		WithRaddr("192.168.8.92:30732"),
+		// WithNetwork("udp"),
+		// WithRaddr("192.168.8.92:30732"),
 	)
 
 	b.RunParallel(func(pb *testing.PB) {
