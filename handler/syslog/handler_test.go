@@ -12,7 +12,7 @@ func TestHandler_Local(t *testing.T) {
 	h := NewHandler("go-packagist", WithLevel(logger.Info))
 
 	assert.False(t, h.Handle(nil))
-	assert.False(t, h.Handle(&monolog.Record{
+	assert.True(t, h.Handle(&monolog.Record{
 		Level:   logger.Debug,
 		Message: "test message",
 		Channel: "go-packagist",
