@@ -48,13 +48,16 @@ func WithFormatter(formatter monolog.Formatter) monolog.HandlerOpt {
 }
 
 func (h *Handler) Handle(record *monolog.Record) bool {
+	formatted := h.GetFormatter().Format(record)
+	if formatted == "" {
+		return false
+	}
+
 	file, err := os.OpenFile(h.filename, os.O_CREATE|os.O_APPEND|os.O_WRONLY, 0666)
 	if err != nil {
 		return false
 	}
 	defer file.Close()
-
-	formatted := h.GetFormatter().Format(record)
 
 	if _, err := file.Write([]byte(formatted)); err != nil {
 		return false
