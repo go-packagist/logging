@@ -2,7 +2,6 @@ package monolog
 
 import (
 	"github.com/go-packagist/logger"
-	"log/syslog"
 )
 
 // Handler is the interface that all handlers must implement.
@@ -88,38 +87,4 @@ func (h *Handlerable) HandleBatch(records []*Record) bool {
 	}
 
 	return true
-}
-
-// SyslogHandlerable is a struct that can be embedded in a syslog.Handler to
-type SyslogHandlerable struct {
-	// severity syslog.Priority // use syslog.Priority as logger.Level
-	facility syslog.Priority
-}
-
-type SyslogHandlerableOpt func(*SyslogHandlerable)
-
-func NewSyslogHandlerable(opts ...SyslogHandlerableOpt) *SyslogHandlerable {
-	s := &SyslogHandlerable{
-		facility: syslog.LOG_USER,
-	}
-
-	for _, opt := range opts {
-		opt(s)
-	}
-
-	return s
-}
-
-func WithFacility(facility syslog.Priority) SyslogHandlerableOpt {
-	return func(s *SyslogHandlerable) {
-		s.SetFacility(facility)
-	}
-}
-
-func (h *SyslogHandlerable) SetFacility(facility syslog.Priority) {
-	h.facility = facility
-}
-
-func (h *SyslogHandlerable) GetFacility() syslog.Priority {
-	return h.facility
 }
