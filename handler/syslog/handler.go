@@ -1,3 +1,5 @@
+//go:build !windows && !plan9
+
 package syslog
 
 import (
@@ -8,25 +10,25 @@ import (
 )
 
 type Handler struct {
-	network, raddr, ident string
+	network  string
+	raddr    string
+	ident    string
+	facility syslog.Priority
 
 	*monolog.Handlerable
-	*monolog.SyslogHandlerable
 }
 
 var _ monolog.Handler = (*Handler)(nil)
 
 func NewHandler(ident string, opts ...monolog.HandlerOpt) *Handler {
 	h := &Handler{
-		network: "",
-		raddr:   "",
-		ident:   ident,
+		network:  "",
+		raddr:    "",
+		ident:    ident,
+		facility: syslog.LOG_USER,
 		Handlerable: monolog.NewHandlerable(
 			monolog.WithLevel(logger.Debug),
 			monolog.WithFormatter(line.NewFormatter()),
-		),
-		SyslogHandlerable: monolog.NewSyslogHandlerable(
-			monolog.WithFacility(syslog.LOG_USER),
 		),
 	}
 
@@ -75,5 +77,5 @@ func (h *Handler) Handle(record *monolog.Record) bool {
 }
 
 func (h *Handler) getPriority() syslog.Priority {
-	return syslog.Priority(h.GetLevel()) | h.GetFacility()
+	return syslog.Priority(h.GetLevel()) | h.facility
 }
