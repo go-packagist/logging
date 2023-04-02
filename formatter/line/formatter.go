@@ -42,6 +42,9 @@ func WithTimeFormat(timeFormat string) monolog.FormatterOpt {
 }
 
 func (f *Formatter) Format(record *monolog.Record) string {
+	if record == nil {
+		return ""
+	}
 	replaces := f.replaces(record)
 
 	replace := f.format
