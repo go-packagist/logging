@@ -51,16 +51,7 @@ func (h *Handlerable) SetLevel(level logger.Level) {
 }
 
 func (h *Handlerable) GetLevel() logger.Level {
-	// If the level is not set, use the default level.
-	if h.level == 0 {
-		return h.GetDefaultLevel()
-	}
-
 	return h.level
-}
-
-func (h *Handlerable) GetDefaultLevel() logger.Level {
-	return logger.Debug
 }
 
 func (h *Handlerable) SetFormatter(formatter Formatter) {
