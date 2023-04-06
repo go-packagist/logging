@@ -1,6 +1,9 @@
 package monolog
 
-import "sync"
+import (
+	"fmt"
+	"sync"
+)
 
 var registry = make(map[string]*Logger, 0)
 var registryMutex = &sync.Mutex{}
@@ -30,6 +33,22 @@ func GetLogger(names ...string) *Logger {
 
 func GetLoggers() map[string]*Logger {
 	return registry
+}
+
+func Close() error {
+	var errs []error
+
+	for _, logger := range registry {
+		if err := logger.Close(); nil != err {
+			errs = append(errs, err)
+		}
+	}
+
+	if len(errs) == 0 {
+		return nil
+	}
+
+	return fmt.Errorf("errors: %v", errs)
 }
 
 func UnregisterLogger(name string) {

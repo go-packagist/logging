@@ -10,6 +10,7 @@ func TestRegistry(t *testing.T) {
 		"test1": NewLogger("test1"),
 		"test2": NewLogger("test2"),
 	})
+	defer Close()
 
 	assert.Same(t, GetLogger("test1"), GetLoggers()["test1"])
 	assert.Same(t, GetLogger("test2"), GetLoggers()["test2"])
@@ -28,6 +29,7 @@ func TestRegister_Default(t *testing.T) {
 		"default": NewLogger("test1"),
 		"test2":   NewLogger("test2"),
 	})
+	defer Close()
 
 	assert.Same(t, GetLogger(), GetLoggers()["default"])
 }
@@ -41,6 +43,7 @@ func TestRegister_Call(t *testing.T) {
 				}),
 		),
 	})
+	defer Close()
 
 	Emergency("test emergency")
 	Alert("test alert")
