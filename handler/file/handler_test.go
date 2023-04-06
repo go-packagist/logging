@@ -29,14 +29,8 @@ func TestHandler(t *testing.T) {
 }
 
 func BenchmarkHander(b *testing.B) {
-	m := monolog.NewLogger("test",
-		monolog.WithHandler(
-			NewHandler(
-				"./../../.testdata/test-file-handler-benchmark.log",
-				WithLevel(logger.Debug),
-			),
-		),
-	)
+	m := createBenchmarkLogger()
+	defer m.Close()
 
 	b.RunParallel(func(pb *testing.PB) {
 		for pb.Next() {
@@ -50,4 +44,17 @@ func BenchmarkHander(b *testing.B) {
 			// m.Debug("test debug")
 		}
 	})
+}
+
+func createBenchmarkLogger() *monolog.Logger {
+	m := monolog.NewLogger("test",
+		monolog.WithHandler(
+			NewHandler(
+				"./../../.testdata/test-file-handler-benchmark.log",
+				WithLevel(logger.Debug),
+			),
+		),
+	)
+
+	return m
 }
