@@ -49,3 +49,11 @@ func (h *Handler) Handle(record *monolog.Record) bool {
 
 	return err == nil
 }
+
+func (h *Handler) Close() error {
+	if closer, ok := h.writer.(io.Closer); ok {
+		return closer.Close()
+	}
+
+	return nil
+}
