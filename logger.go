@@ -1,6 +1,7 @@
 package monolog
 
 import (
+	"fmt"
 	"github.com/go-packagist/logger"
 	"time"
 )
@@ -106,4 +107,20 @@ func (l *Logger) setLoggerable() {
 			}
 		}
 	}
+}
+
+func (l *Logger) Close() error {
+	var errs []error
+
+	for _, handler := range l.handlers {
+		if err := handler.Close(); nil != err {
+			errs = append(errs, err)
+		}
+	}
+
+	if len(errs) == 0 {
+		return nil
+	}
+
+	return fmt.Errorf("errors: %v", errs)
 }

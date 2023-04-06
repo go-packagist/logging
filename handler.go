@@ -9,6 +9,7 @@ type Handler interface {
 	IsHandling(*Record) bool
 	Handle(*Record) bool
 	HandleBatch([]*Record) bool
+	Close() error
 }
 
 // HandlerOpt is a function that can be used to configure a Handler.
@@ -78,4 +79,8 @@ func (h *Handlerable) HandleBatch(records []*Record) bool {
 	}
 
 	return true
+}
+
+func (h *Handlerable) Close() error {
+	return nil
 }

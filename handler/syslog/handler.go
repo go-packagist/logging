@@ -13,6 +13,7 @@ type Handler struct {
 	network  string
 	raddr    string
 	ident    string
+	syslog   *syslog.Writer
 	facility syslog.Priority
 
 	*monolog.Handlerable
@@ -36,6 +37,8 @@ func NewHandler(ident string, opts ...monolog.HandlerOpt) *Handler {
 		opt(h)
 	}
 
+	h.init()
+
 	return h
 }
 
@@ -57,25 +60,57 @@ func WithLevel(level logger.Level) monolog.HandlerOpt {
 	}
 }
 
+func (h *Handler) init() {
+	var err error
+	h.syslog, err = syslog.Dial(h.network, h.raddr, h.facility, h.ident)
+	if err != nil {
+		panic(err)
+	}
+}
+
 func (h *Handler) Handle(record *monolog.Record) bool {
 	formatted := h.GetFormatter().Format(record)
 	if formatted == "" {
 		return false
 	}
 
-	s, err := syslog.Dial(h.network, h.raddr, h.getPriority(), h.ident)
-	if err != nil {
+	var err error
+	switch record.Level {
+	case logger.Debug:
+		err = h.syslog.Debug(formatted)
+		break
+	case logger.Info:
+		err = h.syslog.Info(formatted)
+		break
+	case logger.Notice:
+		err = h.syslog.Notice(formatted)
+		break
+	case logger.Warning:
+		err = h.syslog.Warning(formatted)
+		break
+	case logger.Error:
+		err = h.syslog.Err(formatted)
+		break
+	case logger.Critical:
+		err = h.syslog.Crit(formatted)
+		break
+	case logger.Alert:
+		err = h.syslog.Alert(formatted)
+		break
+	case logger.Emergency:
+		err = h.syslog.Emerg(formatted)
+		break
+	default:
 		return false
 	}
-	defer s.Close()
 
-	if _, err := s.Write([]byte(formatted)); err != nil {
+	if err != nil {
 		return false
 	}
 
 	return true
 }
 
-func (h *Handler) getPriority() syslog.Priority {
-	return syslog.Priority(h.GetLevel()) | h.facility
+func (h *Handler) Close() error {
+	return h.syslog.Close()
 }
